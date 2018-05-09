@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+	<!-- Compiled and minified CSS -->
+
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+	<style>
+		body	{
+			background-color : #111;
+		}
+		.officer {
+		  align-content: center;
+		  align-items: center;
+		  margin-left: auto;
+		  margin-right: auto;
+			width:150x;height:75px;
+		}
+		.btn-large	{
+			font-size : 30px !important;
+		}
+	</style>
+
+	<div class = "container">
+	<nav class="cyan">
+	  <div class="nav-wrapper">
+	    <a href="" class="brand-logo left large">Logo</a>
+	    <ul id="nav-mobile" class="right large">
+	      <li><a href="">System Information</a></li>
+	      <li><a href="">Requests<span class="new badge">4</span></a></li>
+	    </ul>
+	  </div>
+	</nav>
+
+  <div id="modal" class="modal cyan center">
+    <div class="modal-content center">
+      <h4>Request For Chrage</h4>
+      <p id="show"></p>
+    </div>
+    <div class="modal-footer black">
+      <button class="modal-action modal-close waves-effect waves-green btn-flat" style="color:white" onclick="accept()">Agree</button>
+      <button class="modal-action modal-close waves-effect waves-green btn-flat" style="color:white">Disagree</button>
+    </div>
+  </div>
+
+
+	<div id="map" style="width: 544px;height:300px;background:yellow;align-content: center;
+		  align-items: center;
+		  margin-left: auto;
+		  margin-right: auto;" ></div>
+   <script>
+function myMap() {
+var mapOptions = {
+    center: new google.maps.LatLng(12.9021086,77.5332326),
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+}
+var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+var coo = {lat : 12.9021086, lng : 77.5332326}
+
+ var marker = new google.maps.Marker({
+    position: coo,
+    map: map,
+    title: 'You are here'
+  });
+var infowindow = new google.maps.InfoWindow({
+          content: "You are Here"
+        });
+ marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+
+}
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=
+  AIzaSyCEhTGI-pOac9pWy1e_wHYXUFkmVS9GVME
+  &callback=myMap">
+</script>
+<br>
+	<div class="officer" style='text-align: center;'>
+		<button class="btn-large waves-light waves-effect" onclick="LOL()">SEND
+		<i class="material-icons right">send</i></button>
+	</div>
+
+	</div>
+      <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script>
+         require('./renderer.js')
+      </script>
+	<script>
+  const {ipcRenderer} = require('electron')
+  function LOL(){
+      var req = new XMLHttpRequest();
+      req.open("POST", "http://192.168.1.113:3000/send-request", true);
+      req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      req.send("id='feF2-k23pZE:APA91bE0cktUGpNAhhNUAJbxfWEx82LnpTGVkTR30GukBrLfigx0VIIbHWSkbHXWLJFWxuj3tT_SbWuenxIKezNc5jx60Vg_nqE-5abW51G9qlvTl1klG5GRjSfblcSrmUJAplltFXGi'&name=Harry");
+      ipcRenderer.send('open-send-window','LOL');
+  }
+
+  function accept() {
+      var acc = new XMLHttpRequest();
+      acc.open("POST", "http://192.168.1.113:3000/accept-request", true);
+      acc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      acc.send("name=Tom&lat=12.9021086&lng=77.5332326");
+      ipcRenderer.send('open-send-window','LOL');
+  }
+  </script>
+
+
+    </body>
+  </html>
